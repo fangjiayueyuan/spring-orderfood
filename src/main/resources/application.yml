@@ -1,0 +1,31 @@
+server:
+  port: 8080
+location: /Users/jiayueyuanfang/app/foodpic
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/order_food?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root123&&
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      min-idle: 5
+      max-active: 10
+      max-wait: 3000
+      filter: conn,config,wall,log4j
+  thymeleaf:
+    prefix: classpath:/templates/food/
+    suffix: .html
+  web:
+    resources:
+      static-locations: classpath:/static/,classpath:/static/assets/,classpath:/public/,classpath:/resources/,classpath:/META-INF/resource/,file:${location}
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+  global-config:
+    db-config:
+      id-type: auto
+pagehelper:
+  helper-dialect: mysql

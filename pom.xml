@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.17</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.itsystem</groupId>
+	<artifactId>springboot-orderfood</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>springboot-orderfood</name>
+	<description>Demo project for Spring Boot</description>
+	<properties>
+		<java.version>17</java.version>
+	</properties>
+	<dependencies>
+<!--		&lt;!&ndash;是 JavaMail 的核心 API，提供了构建邮件客户端所需的各种类和接口。-->
+<!--		这个库可以用来在 Java 应用程序中发送和接收电子邮件。&ndash;&gt;-->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>javax.mail-api</artifactId>
+			<version>1.5.6</version>
+		</dependency>
+
+		<!--是 JavaMail 的核心 API，提供了构建邮件客户端所需的各种类和接口。
+		这个库可以用来在 Java 应用程序中发送和接收电子邮件。-->
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.5.3</version>
+		</dependency>
+
+		<!--pagehelper：在项目中使用 PageHelper 分页插件了-->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+			<version>1.4.1</version>
+		</dependency>
+
+		<!--thymeleaf：Thymeleaf 是一个 Java 模板引擎，
+		用于服务器端渲染 HTML 视图。
+		在 Spring Boot 项目中添加这个依赖后，
+		就可以在项目中使用 Thymeleaf 来渲染视图了。-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+		<!--test-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!--web-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!--MyBatis-Spring-Boot-Starter
+		是 MyBatis 和 Spring Boot 的集成工具，
+		提供了更多的功能，如自动配置、数据库连接等。-->
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+
+		<!--mysql：用来在 Java 项目中连接 MySQL 数据库的。-->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.47</version>
+		</dependency>
+
+		<!--lombok：可以通过简单的注解形式来帮助
+		我们简化消除一些必须有但显得
+		很臃肿的 Java 代码的工具，
+		例如：getter、setter、equals等方法。-->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.20</version>
+			<scope>provided</scope>
+		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.projectlombok</groupId>-->
+<!--			<artifactId>lombok</artifactId>-->
+<!--&lt;!&ndash;			<optional>true</optional>&ndash;&gt;-->
+<!--		</dependency>-->
+		<!-- 监控系统健康情况的工具-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+			<version>2.3.0.RELEASE</version>
+		</dependency>
+
+		<!--mybatis-plus：MyBatis-Plus 是 MyBatis 的增强工具，
+		提供了更多的功能，如自动分页、代码生成等。-->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>3.0.5</version>
+		</dependency>
+
+		<!--数据库连接池jar包，我们的项目使用Druid数据库连接池-->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid-spring-boot-starter</artifactId>
+			<version>1.2.8</version>
+		</dependency>
+
+		<!-- 胡图工具类这个依赖是 Hutool 工具包，
+		Hutool 是一个 Java 工具包，也只是一个工具包，
+		它帮助我们简化每一行代码，减少每一个方法，
+		让 Java 语言也可以 '甜' 起来。 -->
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>5.1.0</version>
+		</dependency>
+
+		<!--在项目中引入 Bootstrap 前端框架。-->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>3.3.7</version>
+		</dependency>
+
+		<!--前端jquery框架依赖jar包-->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>3.3.1</version>
+		</dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>17.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+</project>

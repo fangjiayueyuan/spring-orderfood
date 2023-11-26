@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"><!--记住 我的电脑这里只能是http才能出来小鸟-->
+<mapper namespace="com.itsystem.springbootorderfood.mapper.OrderMapper">
+    <resultMap id="order" type="com.itsystem.springbootorderfood.pojo.Order">
+        <!-- column是数据库名字，property是实体类的属性名  -->
+        <result column="id" property="id"/>
+        <result column="cid" property="cid"/>
+        <result column="fid" property="fid"/>
+        <result column="order_time" property="orderTime"/>
+        <result column="total" property="total"/>
+        <result column="count" property="count"/>
+        <result column="status" property="status"/>
+        <result column="isorder" property="isorder"/>
+
+        <association property="customer">
+            <result column="id" property="id"/>
+            <result column="customer_name" property="customerName"/>
+            <result column="password" property="password"/>
+            <result column="email" property="email"/>
+            <result column="phone" property="phone"/>
+            <result column="address" property="address"/>
+            <result column="cimage" property="cimage"/>
+        </association>
+
+        <association property="food">
+            <result column="id" property="id"/>
+            <result column="food_name" property="foodName"/>
+            <result column="stock" property="stock"/>
+            <result column="descr" property="descr"/>
+            <result column="store" property="store"/>
+            <result column="price" property="price"/>
+            <result column="fimage" property="fimage"/>
+            <result column="status" property="status"/>
+        </association>
+
+    </resultMap>
+
+<!--    <resultMap id="count" type="com.itsystem.springbootorderfood.pojo.CountNumber">-->
+<!--        &lt;!&ndash; column是数据库名字，property是实体类的属性名  &ndash;&gt;-->
+<!--        <result column="name" property="name"/>-->
+<!--        <result column="count" property="count"/>-->
+<!--    </resultMap>-->
+
+    <select id="queryAll" resultType="com.itsystem.springbootorderfood.pojo.Order" resultMap="order">
+        select o.id,f.food_name,f.fimage,f.price, o.order_time,c.address,c.customer_name,c.cimage, o.count, o.total,o.status,c.email
+        from customer c,food f,f_order o
+        <where>
+            AND c.id=o.cid and f.id=o.fid and o.isorder=1
+            <if test="id != null and id!='' ">
+                and o.id=#{id}
+            </if>
+        </where>
+        order by o.status
+    </select>
+    <select id="getOrderById" resultType="com.itsystem.springbootorderfood.pojo.Order" resultMap="order">
+        select  o.id,c.customer_name,f.food_name from
+        f_order o,customer c,food f where o.cid=c.id and o.fid=f.id and o.id=#{id}
+    </select>
+
+<!--    <select id="queryCount" resultType="com.itsystem.springbootorderfood.pojo.CountNumber" resultMap="count">-->
+    <select id="queryCount" resultType="com.itsystem.springbootorderfood.pojo.CountNumber">
+        select f.store as name, sum(o.count) as count
+        from food as f, f_order as o
+        where o.fid = f.id
+        group by f.store
+        order by count desc
+    </select>
+    <select id="queryTotal" resultType="com.itsystem.springbootorderfood.pojo.CountNumber">
+        select f.food_name as name, sum(o.total) as count
+        from food as f, f_order as o
+        where o.fid = f.id
+        group by f.food_name
+        order by count desc
+    </select>
+
+    <select id="getCollection" resultType="com.itsystem.springbootorderfood.pojo.Order" resultMap="order">
+        select
+            o.id,
+            f.id as fid,
+            f.food_name,
+            f.fimage,
+            f.price,
+            f.stock
+        from f_order as o,
+             food as f,
+             customer as c
+        where o.fid = f.id
+        and o.cid = c.id
+        and c.id = #{userId}
+        and o.isorder = 2
+    </select>
+
+    <select id="getCart" resultType="com.itsystem.springbootorderfood.pojo.Order" resultMap="order">
+        select
+        f.food_name,
+        f.fimage,
+        f.price,
+        o.count,
+        o.total,
+        o.id
+        from f_order as o,
+        food as f,
+        customer as c
+        where o.fid = f.id
+        and o.cid = c.id
+        and c.id = #{userId}
+        and o.isorder = 0
+    </select>
+
+    <select id="getOrderList" resultType="com.itsystem.springbootorderfood.pojo.Order" resultMap="order">
+        select
+        f.food_name,
+        f.fimage,
+        o.count,
+        o.total,
+        o.order_time,
+        o.status,
+        o.id,
+        c.address
+        from f_order as o,
+        food as f,
+        customer as c
+        <where>
+            o.fid = f.id
+            and o.cid = c.id
+            and c.id = #{userId}
+            and o.isorder = 1
+            <if test="foodName != null and foodName!= '' ">
+                and f.food_name like concat('%',#{foodName},'%')
+            </if>
+        </where>
+
+    </select>
+    <select id="getInvoiceById" resultType="com.itsystem.springbootorderfood.pojo.Order" resultMap="order">
+        select
+            o.id,
+            c.customer_name,
+            c.email,
+            c.phone,
+            o.count,
+            o.total,
+            o.order_time,
+            f.food_name,
+            f.store,
+            f.price
+        from
+            f_order as o,
+            customer as c,
+            food as f
+        where o.fid = f.id
+        and o.cid=c.id
+        and o.id = #{orderId}
+    </select>
+
+    <update id="payOrder">
+        update f_order set isorder=1 where cid = #{userId} and isorder=0
+    </update>
+
+
+</mapper>
+
